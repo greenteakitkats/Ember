@@ -9,9 +9,16 @@ struct ContentView: View {
     @State private var showingContactPicker = false
     @State private var showingManualAdd = false
     @State private var path = NavigationPath()
+    @State private var searchText = ""
+    @State private var expandedSections: Set<HealthState> = []
+
+    private var filteredPeople: [Person] {
+        guard !searchText.isEmpty else { return Array(people) }
+        return people.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+    }
 
     private var sections: [(state: HealthState, members: [Person])] {
-        let grouped = Dictionary(grouping: people, by: \.healthState)
+        let grouped = Dictionary(grouping: filteredPeople, by: \.healthState)
         return HealthState.allCases.compactMap { state in
             guard var members = grouped[state], !members.isEmpty else { return nil }
             switch state {
@@ -39,14 +46,42 @@ struct ContentView: View {
                 } else {
                     List {
                         ForEach(sections, id: \.state) { section in
-                            Section(section.state.label) {
-                                ForEach(section.members) { person in
-                                    NavigationLink(value: person) {
-                                        PersonRow(person: person)
+                            Section {
+                                if isExpanded(section.state) {
+                                    ForEach(section.members) { person in
+                                        NavigationLink(value: person) {
+                                            PersonRow(person: person)
+                                        }
+                                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                            Button {
+                                                quickLog(person)
+                                            } label: {
+                                                Label("Talked", systemImage: "checkmark.bubble.fill")
+                                            }
+                                            .tint(.green)
+                                        }
+                                        .swipeActions(edge: .trailing) {
+                                            Button {
+                                                person.isPaused.toggle()
+                                            } label: {
+                                                if person.isPaused {
+                                                    Label("Resume", systemImage: "play.fill")
+                                                } else {
+                                                    Label("Pause", systemImage: "pause.fill")
+                                                }
+                                            }
+                                            .tint(.indigo)
+                                        }
                                     }
                                 }
+                            } header: {
+                                sectionHeader(for: section.state, count: section.members.count)
                             }
                         }
+                    }
+                    .searchable(text: $searchText, prompt: "Search people")
+                    .refreshable {
+                        ContactsManager.shared.refresh(people)
                     }
                 }
             }
@@ -97,6 +132,43 @@ struct ContentView: View {
         }
     }
 
+    // MARK: - Sections
+
+    private func isExpanded(_ state: HealthState) -> Bool {
+        !state.collapsedByDefault || expandedSections.contains(state) || !searchText.isEmpty
+    }
+
+    @ViewBuilder
+    private func sectionHeader(for state: HealthState, count: Int) -> some View {
+        if state.collapsedByDefault && searchText.isEmpty {
+            Button {
+                withAnimation {
+                    if expandedSections.contains(state) {
+                        expandedSections.remove(state)
+                    } else {
+                        expandedSections.insert(state)
+                    }
+                }
+            } label: {
+                HStack(spacing: 5) {
+                    Text("\(state.label) · \(count)")
+                    Image(systemName: isExpanded(state) ? "chevron.down" : "chevron.forward")
+                        .font(.caption2.weight(.semibold))
+                }
+            }
+        } else {
+            Text("\(state.label) · \(count)")
+        }
+    }
+
+    // MARK: - Actions
+
+    private func quickLog(_ person: Person) {
+        let interaction = Interaction(type: .other, source: .manual)
+        modelContext.insert(interaction)
+        interaction.person = person
+    }
+
     private func addFromContacts() {
         Task {
             // Ask in context; the picker itself works either way, but sync
@@ -131,9 +203,11 @@ private struct PersonRow: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            Circle()
-                .fill(person.healthState.color)
-                .frame(width: 10, height: 10)
+            if let label = person.overdueLabel {
+                Text(label)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(person.healthState.color)
+            }
         }
         .padding(.vertical, 2)
     }
@@ -141,10 +215,10 @@ private struct PersonRow: View {
     private var subtitle: String {
         if person.isPaused { return "Paused" }
         guard let last = person.lastContactDate else {
-            return "No history yet · \(person.cadence.label.lowercased())"
+            return "No history yet · \(person.cadence.shortLabel)"
         }
         let ago = last.formatted(.relative(presentation: .named))
-        return "Last talked \(ago) · \(person.cadence.label.lowercased())"
+        return "\(ago) · \(person.cadence.shortLabel)"
     }
 }
 

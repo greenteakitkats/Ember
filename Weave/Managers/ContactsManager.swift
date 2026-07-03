@@ -39,8 +39,17 @@ final class ContactsManager {
             person.name = name
         }
         person.photoData = contact.thumbnailImageData
-        person.phoneNumber = contact.phoneNumbers.first?.value.stringValue
-        person.email = contact.emailAddresses.first?.value as String?
+
+        // Cache all numbers/emails; keep the user's chosen one if it still
+        // exists on the contact, otherwise fall back to the first.
+        person.phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }
+        if person.phoneNumber == nil || !person.phoneNumbers.contains(person.phoneNumber!) {
+            person.phoneNumber = person.phoneNumbers.first
+        }
+        person.emails = contact.emailAddresses.map { $0.value as String }
+        if person.email == nil || !person.emails.contains(person.email!) {
+            person.email = person.emails.first
+        }
         if let birthday = contact.birthday, birthday.month != nil, birthday.day != nil {
             person.birthday = Calendar.current.date(from: birthday)
         }

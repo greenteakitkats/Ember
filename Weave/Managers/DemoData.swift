@@ -70,6 +70,8 @@ enum DemoData {
             notes: "Moved to Osaka in the spring. Ask how the new apartment and the ramen hunt are going.",
             birthday: calendar.date(from: DateComponents(year: 1994, month: 11, day: 8))
         )
+        kenji.phoneNumbers = ["+81 90 1234 5678", "+1 (555) 010-4455"]
+        kenji.emails = ["kenji@example.com"]
         log(kenji, .call, daysAgo: 200, note: "Caught up about his move")
         log(kenji, .inPerson, daysAgo: 320, note: "Dinner in Umeda before I flew home")
 

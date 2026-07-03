@@ -20,6 +20,9 @@ struct PersonDetailView: View {
             if person.lastContactDate == nil && !person.isPaused {
                 seedSection
             }
+            if person.phoneNumber != nil || person.email != nil {
+                contactSection
+            }
             settingsSection
             notesSection
             historySection
@@ -74,8 +77,8 @@ struct PersonDetailView: View {
                     Text(lastTalkedText)
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    if let birthday = person.birthday {
-                        Text("Birthday \(birthday.formatted(.dateTime.month(.wide).day()))")
+                    if let birthdayText {
+                        Text(birthdayText)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -113,6 +116,37 @@ struct PersonDetailView: View {
         }
     }
 
+    private var contactSection: some View {
+        Section {
+            if person.phoneNumbers.count > 1 {
+                Picker("Phone", selection: $person.phoneNumber) {
+                    ForEach(person.phoneNumbers, id: \.self) { number in
+                        Text(number).tag(Optional(number))
+                    }
+                }
+                .tint(Color.accentColor)
+            } else if let phone = person.phoneNumber {
+                LabeledContent("Phone", value: phone)
+            }
+            if person.emails.count > 1 {
+                Picker("Email", selection: $person.email) {
+                    ForEach(person.emails, id: \.self) { email in
+                        Text(email).tag(Optional(email))
+                    }
+                }
+                .tint(Color.accentColor)
+            } else if let email = person.email {
+                LabeledContent("Email", value: email)
+            }
+        } header: {
+            Text("Contact")
+        } footer: {
+            if person.phoneNumbers.count > 1 || person.emails.count > 1 {
+                Text("The selected number and email are what the buttons above use.")
+            }
+        }
+    }
+
     private var settingsSection: some View {
         Section {
             Picker("Cadence", selection: $person.cadence) {
@@ -120,6 +154,7 @@ struct PersonDetailView: View {
                     Text(cadence.label).tag(cadence)
                 }
             }
+            .tint(Color.accentColor)
             Toggle("Paused", isOn: $person.isPaused)
         } footer: {
             Text("Paused people are hidden from health tracking without losing history.")
@@ -239,6 +274,38 @@ struct PersonDetailView: View {
     private var lastTalkedText: String {
         guard let last = person.lastContactDate else { return "No history yet" }
         return "Last talked \(last.formatted(.relative(presentation: .named)))"
+    }
+
+    private var birthdayText: String? {
+        guard let birthday = person.birthday else { return nil }
+        let calendar = Calendar.current
+        let dateText = birthday.formatted(.dateTime.month(.wide).day())
+
+        let components = calendar.dateComponents([.month, .day], from: birthday)
+        let today = calendar.dateComponents([.month, .day], from: .now)
+        if today.month == components.month && today.day == components.day {
+            return "Birthday \(dateText) · today 🎂"
+        }
+        guard let next = calendar.nextDate(
+            after: calendar.startOfDay(for: .now),
+            matching: components,
+            matchingPolicy: .nextTimePreservingSmallerComponents
+        ) else { return "Birthday \(dateText)" }
+
+        let days = calendar.dateComponents(
+            [.day],
+            from: calendar.startOfDay(for: .now),
+            to: calendar.startOfDay(for: next)
+        ).day ?? 0
+
+        let countdown: String
+        switch days {
+        case 0: countdown = "today 🎂"
+        case 1: countdown = "tomorrow"
+        case ..<45: countdown = "in \(days) days"
+        default: countdown = "in \(Int((Double(days) / 30.4).rounded())) months"
+        }
+        return "Birthday \(dateText) · \(countdown)"
     }
 }
 

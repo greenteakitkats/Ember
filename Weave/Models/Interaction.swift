@@ -42,7 +42,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
         case .message: "Message"
         case .email: "Email"
         case .inPerson: "In person"
-        case .other: "Other"
+        case .other: "Catch-up"
         }
     }
 
@@ -52,7 +52,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
         case .message: "message.fill"
         case .email: "envelope.fill"
         case .inPerson: "person.2.fill"
-        case .other: "ellipsis.circle.fill"
+        case .other: "bubble.left.and.bubble.right.fill"
         }
     }
 }

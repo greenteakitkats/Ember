@@ -9,8 +9,12 @@ final class Person {
     var name: String = ""
     var contactIdentifier: String?
     var photoData: Data?
+    // The number/email used for outreach. When the linked contact has
+    // several, the user picks one; the full lists live in the arrays below.
     var phoneNumber: String?
     var email: String?
+    var phoneNumbers: [String] = []
+    var emails: [String] = []
     var birthday: Date?
     var cadenceRaw: String = Cadence.monthly.rawValue
     var notes: String = ""
@@ -58,6 +62,24 @@ final class Person {
         return .overdue
     }
 
+    /// Days past the cadence deadline. Negative means not due yet.
+    var daysPastCadence: Int? {
+        guard let last = lastContactDate else { return nil }
+        let daysSince = Int(Date.now.timeIntervalSince(last) / 86_400)
+        return daysSince - cadence.days
+    }
+
+    /// Compact "how late" label for list rows, e.g. "3mo over" or "due soon".
+    /// nil when the state itself (on track, new, paused) says everything.
+    var overdueLabel: String? {
+        guard healthState == .overdue || healthState == .drifting,
+              let over = daysPastCadence else { return nil }
+        if over <= 0 { return "due soon" }
+        if over < 14 { return "\(over)d over" }
+        if over < 60 { return "\(over / 7)w over" }
+        return "\(over / 30)mo over"
+    }
+
     var initials: String {
         let parts = name.split(separator: " ").prefix(2)
         return parts.map { String($0.prefix(1)) }.joined().uppercased()
@@ -95,6 +117,18 @@ enum Cadence: String, CaseIterable, Identifiable {
         case .yearly: "Yearly"
         }
     }
+
+    /// Fits on one list-row line next to "Last talked … ·".
+    var shortLabel: String {
+        switch self {
+        case .weekly: "weekly"
+        case .biweekly: "2×/month"
+        case .monthly: "monthly"
+        case .quarterly: "quarterly"
+        case .twiceAYear: "2×/year"
+        case .yearly: "yearly"
+        }
+    }
 }
 
 enum HealthState: Int, CaseIterable, Identifiable {
@@ -124,5 +158,11 @@ enum HealthState: Int, CaseIterable, Identifiable {
         case .unranked: .blue
         case .paused: .gray
         }
+    }
+
+    /// Healthy/inactive sections start collapsed so overdue people
+    /// never scroll off screen.
+    var collapsedByDefault: Bool {
+        self == .onTrack || self == .paused
     }
 }
