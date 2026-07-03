@@ -22,6 +22,18 @@ iOS personal CRM: track the people you care about, see who's drifting, get promp
 
 Health thresholds (on track <0.8, drifting 0.8–1.2, overdue >1.2 of cadence) are in `Person.healthState` — the spec says keep them tunable in one place.
 
+## Simulator demo data
+
+`Managers/DemoData.swift` (DEBUG only) seeds a sample network via launch arguments — used for screenshots and manual testing since `simctl` can't tap:
+
+```
+xcrun simctl launch <device> ryantdo.Weave -demoData            # wipe + seed sample people
+xcrun simctl launch <device> ryantdo.Weave -demoData -openFirstPerson  # jump to most overdue detail
+xcrun simctl launch <device> ryantdo.Weave -showManualAdd       # present the add-person sheet
+```
+
+Current UI screenshots live in `Screenshots/`.
+
 ## Product tone
 
 Anti-guilt by design: snoozing never penalizes, no streak shaming, warm copy. If a feature makes the user feel bad about their relationships, it's wrong for this app.

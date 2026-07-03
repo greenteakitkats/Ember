@@ -8,6 +8,7 @@ struct ContentView: View {
 
     @State private var showingContactPicker = false
     @State private var showingManualAdd = false
+    @State private var path = NavigationPath()
 
     private var sections: [(state: HealthState, members: [Person])] {
         let grouped = Dictionary(grouping: people, by: \.healthState)
@@ -24,7 +25,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             Group {
                 if people.isEmpty {
                     ContentUnavailableView {
@@ -47,10 +48,10 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .navigationDestination(for: Person.self) { person in
-                        PersonDetailView(person: person)
-                    }
                 }
+            }
+            .navigationDestination(for: Person.self) { person in
+                PersonDetailView(person: person)
             }
             .navigationTitle("Weave")
             .toolbar {
@@ -77,6 +78,20 @@ struct ContentView: View {
                 AddManualPersonSheet()
             }
             .task {
+                #if DEBUG
+                if DemoData.isRequested {
+                    DemoData.seed(into: modelContext)
+                }
+                if DemoData.shouldShowManualAdd {
+                    showingManualAdd = true
+                }
+                if DemoData.shouldOpenFirstPerson {
+                    let everyone = (try? modelContext.fetch(FetchDescriptor<Person>())) ?? []
+                    if let target = everyone.max(by: { ($0.overdueRatio ?? -1) < ($1.overdueRatio ?? -1) }) {
+                        path.append(target)
+                    }
+                }
+                #endif
                 ContactsManager.shared.refresh(people)
             }
         }
