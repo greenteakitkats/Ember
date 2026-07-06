@@ -29,6 +29,7 @@ final class Interaction {
 
 enum InteractionType: String, CaseIterable, Identifiable {
     case call
+    case facetime
     case message
     case email
     case inPerson
@@ -39,6 +40,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
     var label: String {
         switch self {
         case .call: "Call"
+        case .facetime: "FaceTime"
         case .message: "Message"
         case .email: "Email"
         case .inPerson: "In person"
@@ -49,6 +51,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
     var icon: String {
         switch self {
         case .call: "phone.fill"
+        case .facetime: "video.fill"
         case .message: "message.fill"
         case .email: "envelope.fill"
         case .inPerson: "person.2.fill"

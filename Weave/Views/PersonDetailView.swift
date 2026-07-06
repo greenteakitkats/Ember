@@ -96,6 +96,7 @@ struct PersonDetailView: View {
         Section {
             HStack(spacing: 10) {
                 outreachButton(.call, enabled: phoneDigits != nil)
+                outreachButton(.facetime, enabled: phoneDigits != nil || person.email != nil)
                 outreachButton(.message, enabled: phoneDigits != nil)
                 outreachButton(.email, enabled: person.email != nil)
             }
@@ -218,6 +219,10 @@ struct PersonDetailView: View {
         case .call:
             guard let digits = phoneDigits else { return nil }
             return URL(string: "tel:\(digits)")
+        case .facetime:
+            // FaceTime reaches people by number or by Apple ID email.
+            guard let target = phoneDigits ?? person.email else { return nil }
+            return URL(string: "facetime:\(target)")
         case .message:
             guard let digits = phoneDigits else { return nil }
             return URL(string: "sms:\(digits)")
