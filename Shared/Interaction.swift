@@ -33,6 +33,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
     case message
     case email
     case inPerson
+    case gift
     case other
 
     var id: String { rawValue }
@@ -44,6 +45,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
         case .message: "Message"
         case .email: "Email"
         case .inPerson: "In person"
+        case .gift: "Gift"
         case .other: "Catch-up"
         }
     }
@@ -55,6 +57,7 @@ enum InteractionType: String, CaseIterable, Identifiable {
         case .message: "message.fill"
         case .email: "envelope.fill"
         case .inPerson: "person.2.fill"
+        case .gift: "gift.fill"
         case .other: "bubble.left.and.bubble.right.fill"
         }
     }

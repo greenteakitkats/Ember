@@ -85,6 +85,8 @@ enum DemoData {
         kenji.phoneNumbers = ["+81 90 1234 5678", "+1 (555) 010-4455"]
         kenji.emails = ["kenji@example.com"]
         kenji.askAboutNext = "How the apartment hunt ended"
+        kenji.loves = "Ramen hunting, A24 films, his cat Mochi"
+        log(kenji, .gift, daysAgo: 240, note: "Sent Blue Bottle beans")
         log(kenji, .call, daysAgo: 200, note: "Caught up about his move")
         log(kenji, .inPerson, daysAgo: 320, note: "Dinner in Umeda before I flew home")
 

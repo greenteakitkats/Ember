@@ -16,9 +16,16 @@ iOS personal CRM: track the people you care about, see who's drifting, get promp
 
 ## Architecture
 
-- `Models/` — `Person` (health math lives here: `overdueRatio`, `healthState`), `Interaction`
-- `Managers/` — `ContactsManager` (CNContactStore sync; people link via `contactIdentifier`, cached fields refresh on launch)
-- `Views/` — `ContentView` (ranked list grouped by health), `PersonDetailView` (outreach buttons + history + cadence), sheets for logging/adding
+Two targets: the app and `WeaveWidgetExtension` (WidgetKit). They share one SwiftData store through the app group `group.ryantdo.Weave` (`SharedStore`); if the group container is unavailable (unsigned simulator builds), it falls back to the local default store so nothing breaks.
+
+- `Shared/` — compiled into BOTH targets: `Person` (health math lives here: `overdueRatio`, `healthState`), `Interaction`, `SharedStore`
+- `Weave/Managers/` — `ContactsManager` (CNContactStore sync; people link via `contactIdentifier`, cached fields refresh on launch), `DemoData`
+- `Weave/Views/` — `ContentView` (ranked list grouped by health), `PersonDetailView` (recall-first card: ask-about + notes + loves, then outreach buttons), sheets for logging/capturing/adding
+- `WeaveWidget/` — home screen widget ("N people miss you" + top drifting people)
+
+## Tone & design
+
+Warm, not sterile: terracotta accent, rounded type (`.fontDesign(.rounded)` at the app root), human copy ("Been too long", "quiet 3mo", "Resting", "N people would love to hear from you"). Never clinical CRM language in UI copy.
 
 Health thresholds (on track <0.8, drifting 0.8–1.2, overdue >1.2 of cadence) are in `Person.healthState` — the spec says keep them tunable in one place.
 

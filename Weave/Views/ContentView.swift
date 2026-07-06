@@ -45,6 +45,14 @@ struct ContentView: View {
                     }
                 } else {
                     List {
+                        if let greeting, searchText.isEmpty {
+                            Section {
+                            } header: {
+                                Text(greeting)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
                         ForEach(sections, id: \.state) { section in
                             Section {
                                 if isExpanded(section.state) {
@@ -133,6 +141,16 @@ struct ContentView: View {
     }
 
     // MARK: - Sections
+
+    private var greeting: String? {
+        let due = people.filter {
+            $0.healthState == .overdue || $0.healthState == .drifting
+        }.count
+        guard due > 0 else { return nil }
+        return due == 1
+            ? "1 person would love to hear from you"
+            : "\(due) people would love to hear from you"
+    }
 
     private func isExpanded(_ state: HealthState) -> Bool {
         !state.collapsedByDefault || expandedSections.contains(state) || !searchText.isEmpty

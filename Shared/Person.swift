@@ -20,6 +20,9 @@ final class Person {
     var notes: String = ""
     // One-line reminder surfaced before outreach; cleared once asked.
     var askAboutNext: String?
+    // Hobbies, favorite things, the little stuff that makes people
+    // feel noticed ("Ramen, A24 films, her cat Mochi").
+    var loves: String = ""
     var isPaused: Bool = false
     var contactLinkBroken: Bool = false
     // Onboarding seed for people whose real history predates the app.
@@ -71,15 +74,24 @@ final class Person {
         return daysSince - cadence.days
     }
 
-    /// Compact "how late" label for list rows, e.g. "3mo over" or "due soon".
-    /// nil when the state itself (on track, new, paused) says everything.
+    /// Compact "how quiet" label for list rows, e.g. "quiet 3mo".
+    /// nil when the state itself (in touch, new, resting) says everything.
     var overdueLabel: String? {
         guard healthState == .overdue || healthState == .drifting,
               let over = daysPastCadence else { return nil }
-        if over <= 0 { return "due soon" }
-        if over < 14 { return "\(over)d over" }
-        if over < 60 { return "\(over / 7)w over" }
-        return "\(over / 30)mo over"
+        if over <= 0 { return "check in soon" }
+        if over < 14 { return "quiet \(over)d" }
+        if over < 60 { return "quiet \(over / 7)w" }
+        return "quiet \(over / 30)mo"
+    }
+
+    /// Most recent interaction of a given type — powers "last seen in
+    /// person" and "last gift" without the user maintaining anything.
+    func lastDate(of type: InteractionType) -> Date? {
+        (interactions ?? [])
+            .filter { $0.type == type }
+            .map(\.date)
+            .max()
     }
 
     var initials: String {
@@ -144,11 +156,11 @@ enum HealthState: Int, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .overdue: "Overdue"
+        case .overdue: "Been too long"
         case .drifting: "Drifting"
-        case .onTrack: "On track"
-        case .unranked: "New"
-        case .paused: "Paused"
+        case .onTrack: "In touch"
+        case .unranked: "Just added"
+        case .paused: "Resting"
         }
     }
 

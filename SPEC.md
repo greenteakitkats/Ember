@@ -133,7 +133,7 @@ After import, a fast flow to assign cadence and rough "last talked" to each pers
 
 **P1-4. Circles (tags).** Assign contacts to groups; filter ranked list by circle; new-contact cadence defaults per circle.
 
-**P1-5. Home screen widget.** Small/medium widget: top 3 overdue people with tap-through to their card.
+**P1-5. Home screen widget.** *(Built July 2026.)* Small/medium widget: "N people miss you" plus the top drifting people. Shares the SwiftData store via app group `group.ryantdo.Weave`, with a local-store fallback if the group is unavailable.
 
 **P1-6. Data export.** JSON export of contacts, interactions, milestones from Settings.
 
@@ -197,3 +197,5 @@ For traceability, everything above that wasn't in the initial idea:
 12. **Data export + local-only privacy stance** — it's intimate data; treat it that way
 13. **Monthly recap with warm tone** — positive reinforcement, deliberately no streaks-shaming
 14. **CloudKit-compatible data model now** — so the free-account iCloud constraint (hit on Evenly) doesn't force a migration later
+15. **Warm design language** (July 2026) — terracotta accent, rounded type, human copy: "Been too long" not "Overdue", "quiet 3mo" not "3mo over", "Resting" not "Paused", "N people would love to hear from you" as the home greeting. An app about keeping in touch shouldn't read like a ticketing system
+16. **The little things** (July 2026) — a "things they love" line per person (hobbies, favorites), a Gift interaction type, and auto-derived facts ("seen in person 11 months ago · last gift 8 months ago") shown on the card. People feel loved when they're noticed; nobody remembers everything

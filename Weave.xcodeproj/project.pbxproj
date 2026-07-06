@@ -6,9 +6,48 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BB00000100000000000000C4 /* WeaveWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB00000100000000000000B1 /* WeaveWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BB00000100000000000000C6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB00000100000000000000A6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB00000100000000000000B4;
+			remoteInfo = WeaveWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BB00000100000000000000C3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BB00000100000000000000C4 /* WeaveWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		BB00000100000000000000A1 /* Weave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weave.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB00000100000000000000B1 /* WeaveWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WeaveWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BB00000100000000000000C2 /* Exceptions for "WeaveWidget" folder in "WeaveWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BB00000100000000000000B4 /* WeaveWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BB00000100000000000000A4 /* Weave */ = {
@@ -18,10 +57,32 @@
 			path = Weave;
 			sourceTree = "<group>";
 		};
+		BB00000100000000000000B2 /* WeaveWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BB00000100000000000000C2 /* Exceptions for "WeaveWidget" folder in "WeaveWidgetExtension" target */,
+			);
+			path = WeaveWidget;
+			sourceTree = "<group>";
+		};
+		BB00000100000000000000B3 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BB00000100000000000000A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB00000100000000000000B6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -35,6 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				BB00000100000000000000A4 /* Weave */,
+				BB00000100000000000000B3 /* Shared */,
+				BB00000100000000000000B2 /* WeaveWidget */,
 				BB00000100000000000000A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				BB00000100000000000000A1 /* Weave.app */,
+				BB00000100000000000000B1 /* WeaveWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,13 +121,16 @@
 				BB00000100000000000000A7 /* Sources */,
 				BB00000100000000000000A8 /* Frameworks */,
 				BB00000100000000000000A9 /* Resources */,
+				BB00000100000000000000C3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BB00000100000000000000C5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				BB00000100000000000000A4 /* Weave */,
+				BB00000100000000000000B3 /* Shared */,
 			);
 			name = Weave;
 			packageProductDependencies = (
@@ -71,6 +138,29 @@
 			productName = Weave;
 			productReference = BB00000100000000000000A1 /* Weave.app */;
 			productType = "com.apple.product-type.application";
+		};
+		BB00000100000000000000B4 /* WeaveWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB00000100000000000000B8 /* Build configuration list for PBXNativeTarget "WeaveWidgetExtension" */;
+			buildPhases = (
+				BB00000100000000000000B5 /* Sources */,
+				BB00000100000000000000B6 /* Frameworks */,
+				BB00000100000000000000B7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				BB00000100000000000000B2 /* WeaveWidget */,
+				BB00000100000000000000B3 /* Shared */,
+			);
+			name = WeaveWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = WeaveWidgetExtension;
+			productReference = BB00000100000000000000B1 /* WeaveWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -83,6 +173,9 @@
 				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					BB00000100000000000000A5 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					BB00000100000000000000B4 = {
 						CreatedOnToolsVersion = 26.5;
 					};
 				};
@@ -102,12 +195,20 @@
 			projectRoot = "";
 			targets = (
 				BB00000100000000000000A5 /* Weave */,
+				BB00000100000000000000B4 /* WeaveWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		BB00000100000000000000A9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB00000100000000000000B7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -124,7 +225,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB00000100000000000000B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BB00000100000000000000C5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB00000100000000000000B4 /* WeaveWidgetExtension */;
+			targetProxy = BB00000100000000000000C6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		BB00000100000000000000AC /* Debug */ = {
@@ -310,6 +426,60 @@
 			};
 			name = Release;
 		};
+		BB00000100000000000000B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WeaveWidget/WeaveWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VGF2H2R97B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WeaveWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Weave;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Weave.WeaveWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BB00000100000000000000C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = WeaveWidget/WeaveWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VGF2H2R97B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WeaveWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Weave;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Weave.WeaveWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +497,15 @@
 			buildConfigurations = (
 				BB00000100000000000000AC /* Debug */,
 				BB00000100000000000000AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB00000100000000000000B8 /* Build configuration list for PBXNativeTarget "WeaveWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB00000100000000000000B9 /* Debug */,
+				BB00000100000000000000C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

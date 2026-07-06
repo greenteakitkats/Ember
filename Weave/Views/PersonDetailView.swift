@@ -172,9 +172,9 @@ struct PersonDetailView: View {
                 }
             }
             .tint(Color.accentColor)
-            Toggle("Paused", isOn: $person.isPaused)
+            Toggle("Resting", isOn: $person.isPaused)
         } footer: {
-            Text("Paused people are hidden from health tracking without losing history.")
+            Text("Resting people sit out of health tracking without losing their history. For travel, rough patches, or just needing space.")
         }
     }
 
@@ -201,9 +201,29 @@ struct PersonDetailView: View {
                 axis: .vertical
             )
             .lineLimit(2...8)
+            HStack(spacing: 8) {
+                Image(systemName: "heart")
+                    .foregroundStyle(.secondary)
+                TextField("Things they love…", text: $person.loves)
+            }
         } header: {
             Text("Before you reach out")
+        } footer: {
+            if let littleThings {
+                Text(littleThings)
+            }
         }
+    }
+
+    private var littleThings: String? {
+        var parts: [String] = []
+        if let met = person.lastDate(of: .inPerson) {
+            parts.append("Seen in person \(met.formatted(.relative(presentation: .named)))")
+        }
+        if let gift = person.lastDate(of: .gift) {
+            parts.append("last gift \(gift.formatted(.relative(presentation: .named)))")
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     private var askAboutBinding: Binding<String> {
