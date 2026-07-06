@@ -20,9 +20,17 @@ actor TipJarManager {
     }
 
     func purchase() async -> Bool {
-        guard let product = product ?? (try? await Product.products(for: [productID]).first) else {
-            return false
+        let prod: Product?
+        if let product = product {
+            prod = product
+        } else {
+            do {
+                prod = try await Product.products(for: [productID]).first
+            } catch {
+                return false
+            }
         }
+        guard let product = prod else { return false }
 
         do {
             let result = try await product.purchase()
