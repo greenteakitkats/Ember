@@ -69,7 +69,7 @@ struct PersonDetailView: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("This device can't handle it — normal in the simulator, where Phone, FaceTime, and Mail don't exist. On your iPhone this opens the real app.")
+            Text("This device can't handle it. That's normal in the simulator, where Phone, FaceTime, and Mail don't exist. On your iPhone this opens the real app.")
         }
         .sheet(isPresented: $showingLogSheet) {
             LogInteractionSheet(person: person)

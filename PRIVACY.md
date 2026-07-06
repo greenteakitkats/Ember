@@ -2,7 +2,7 @@
 
 *Last updated: July 6, 2026*
 
-Ember is a personal relationship app. Everything you put into it stays on your device. That's the whole policy, but here's the detail:
+Ember is a personal relationship app. Everything you put into it stays on your device. That's the whole policy, but here is the detail:
 
 ## What Ember stores
 
@@ -17,9 +17,9 @@ Nothing. Ember has no servers, no accounts, no analytics, no ads, no tracking SD
 
 ## Permissions Ember asks for
 
-- **Contacts** — to link the people you pick to their contact cards so names, photos, and birthdays stay current. Ember never modifies or uploads your contacts.
-- **Notifications** (future) — to send you a daily digest of who you might reach out to. Generated entirely on your device.
-- **Face ID** (optional) — to lock the app if you turn that on. Authentication is handled by iOS; Ember never sees biometric data.
+- **Contacts**: to link the people you pick to their contact cards so names, photos, and birthdays stay current. Ember never modifies or uploads your contacts.
+- **Notifications** (future): to send you a daily digest of who you might reach out to. Generated entirely on your device.
+- **Face ID** (optional): to lock the app if you turn that on. Authentication is handled by iOS; Ember never sees biometric data.
 
 ## Deleting your data
 
@@ -27,4 +27,4 @@ Delete a person in the app to remove them and their history, or delete the app t
 
 ## Contact
 
-Questions: open an issue at github.com/greenteakitkats or email rpxzero@gmail.com.
+Questions? Email help@ryantdo.com.

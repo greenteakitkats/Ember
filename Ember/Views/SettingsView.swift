@@ -50,6 +50,15 @@ struct SettingsView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                Link(destination: URL(string: "mailto:help@ryantdo.com?subject=Ember%20Feedback")!) {
+                    HStack {
+                        Text("Send Feedback")
+                        Spacer()
+                        Image(systemName: "envelope")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
                 LabeledContent("Version", value: appVersion)
             } header: {
                 Text("About")
