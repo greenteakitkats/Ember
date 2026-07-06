@@ -50,6 +50,7 @@ struct SettingsView: View {
             .background(Theme.canvas.ignoresSafeArea())
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
+            .preferredColorScheme(AppearanceMode(rawValue: appearanceModeRaw)?.colorScheme)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }

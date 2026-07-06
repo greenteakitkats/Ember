@@ -98,7 +98,8 @@ struct ContentView: View {
             .navigationDestination(for: Person.self) { person in
                 PersonDetailView(person: person)
             }
-            .navigationTitle("Weave")
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Settings", systemImage: "gearshape") {
