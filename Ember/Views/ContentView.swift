@@ -98,6 +98,9 @@ struct ContentView: View {
             .navigationDestination(for: Person.self) { person in
                 PersonDetailView(person: person)
             }
+            .navigationDestination(isPresented: $showingSettings) {
+                SettingsView()
+            }
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -127,9 +130,6 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showingManualAdd) {
                 AddManualPersonSheet()
-            }
-            .sheet(isPresented: $showingSettings) {
-                SettingsView()
             }
             .task {
                 #if DEBUG

@@ -11,6 +11,7 @@ struct PersonDetailView: View {
     @State private var showingLogSheet = false
     @State private var showingCaptureSheet = false
     @State private var showingDeleteConfirm = false
+    @State private var failedOutreach: InteractionType?
     @State private var undoableInteraction: Interaction?
     @State private var undoDismissTask: Task<Void, Never>?
 
@@ -58,6 +59,17 @@ struct PersonDetailView: View {
                 modelContext.delete(person)
                 dismiss()
             }
+        }
+        .alert(
+            "Couldn't open \(failedOutreach?.label ?? "that")",
+            isPresented: Binding(
+                get: { failedOutreach != nil },
+                set: { if !$0 { failedOutreach = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("This device can't handle it — normal in the simulator, where Phone, FaceTime, and Mail don't exist. On your iPhone this opens the real app.")
         }
         .sheet(isPresented: $showingLogSheet) {
             LogInteractionSheet(person: person)
@@ -305,7 +317,10 @@ struct PersonDetailView: View {
     private func startOutreach(_ type: InteractionType) {
         guard let url = outreachURL(for: type) else { return }
         openURL(url) { accepted in
-            guard accepted else { return }
+            guard accepted else {
+                failedOutreach = type
+                return
+            }
             let interaction = Interaction(type: type, source: .outreach)
             modelContext.insert(interaction)
             interaction.person = person
