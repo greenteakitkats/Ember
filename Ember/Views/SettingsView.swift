@@ -9,6 +9,8 @@ struct SettingsView: View {
     @AppStorage("appLockEnabled") private var appLockEnabled = false
 
     @State private var lockError: String?
+    @State private var purchaseInProgress = false
+    @State private var purchaseSuccess = false
 
     var body: some View {
         Form {
@@ -59,6 +61,18 @@ struct SettingsView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                Button {
+                    purchaseCoffee()
+                } label: {
+                    HStack {
+                        Text("Buy Me Coffee")
+                        Spacer()
+                        Image(systemName: purchaseSuccess ? "checkmark.circle.fill" : "heart.fill")
+                            .font(.caption)
+                            .foregroundStyle(purchaseSuccess ? .green : .accentColor)
+                    }
+                }
+                .disabled(purchaseInProgress)
                 LabeledContent("Version", value: appVersion)
             } header: {
                 Text("About")
@@ -88,5 +102,19 @@ struct SettingsView: View {
 
     private var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+
+    private func purchaseCoffee() {
+        purchaseInProgress = true
+        Task {
+            let success = await TipJarManager.shared.purchase()
+            purchaseInProgress = false
+            if success {
+                purchaseSuccess = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    purchaseSuccess = false
+                }
+            }
+        }
     }
 }

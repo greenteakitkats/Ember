@@ -48,3 +48,14 @@ Current UI screenshots live in `Screenshots/`.
 ## Product tone
 
 Anti-guilt by design: snoozing never penalizes, no streak shaming, warm copy. If a feature makes the user feel bad about their relationships, it's wrong for this app.
+
+## Monetization
+
+**Tip jar (post-paid-account).** A "Buy Me Coffee" button lives in Settings > About, powered by StoreKit 2 and `TipJarManager`. To activate post-ship:
+
+1. In App Store Connect, create a consumable in-app purchase product: `com.ryantdo.Ember.coffee`, priced at $0.99 (or chosen region equivalent)
+2. The button then enables automatically and users can purchase
+3. Purchases are verified server-side by StoreKit; no backend needed
+4. This is a goodwill gesture to recoup dev account cost, not a revenue model
+
+Tip jar does NOT gate features; everything stays free. It appears only after the paid account exists and the product is configured in App Store Connect.
