@@ -52,8 +52,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BB00000100000000000000A4 /* Weave */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = Weave;
 			sourceTree = "<group>";
 		};
@@ -67,8 +65,6 @@
 		};
 		BB00000100000000000000B3 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = Shared;
 			sourceTree = "<group>";
 		};
@@ -255,6 +251,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSContactsUsageDescription = "Weave links the people you choose to their contact cards so names, photos, phone numbers, and birthdays stay up to date. Nothing leaves your device.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Weave locks your people and notes until you authenticate.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -287,6 +284,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSContactsUsageDescription = "Weave links the people you choose to their contact cards so names, photos, phone numbers, and birthdays stay up to date. Nothing leaves your device.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Weave locks your people and notes until you authenticate.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -27,6 +27,8 @@ Two targets: the app and `WeaveWidgetExtension` (WidgetKit). They share one Swif
 
 Warm, not sterile: terracotta accent, rounded type (`.fontDesign(.rounded)` at the app root), human copy ("Been too long", "quiet 3mo", "Resting", "N people would love to hear from you"). Never clinical CRM language in UI copy.
 
+Visual system lives in `Weave/Theme.swift`: cream canvas + warm card surfaces (every List/Form hides scroll background and uses `Theme.canvas`/`Theme.card`), a six-hue warm avatar palette hashed stably per person name, and warm health colors in `HealthState.color` (Shared, so the widget matches). The relationship "battery" is `Person.ringFraction` rendered as a depleting ring in `AvatarView` — full after contact, small ember when overdue, deliberately never empty. Serif (`.fontDesign(.serif)`) is reserved for the home greeting and lock screen. `Haptics.logged()` fires on every interaction log. Settings (gear on home) has appearance override and an optional Face ID lock (`appLockEnabled`, LocalAuthentication in `WeaveApp`).
+
 Health thresholds (on track <0.8, drifting 0.8–1.2, overdue >1.2 of cadence) are in `Person.healthState` — the spec says keep them tunable in one place.
 
 ## Simulator demo data

@@ -8,6 +8,7 @@ struct ContentView: View {
 
     @State private var showingContactPicker = false
     @State private var showingManualAdd = false
+    @State private var showingSettings = false
     @State private var path = NavigationPath()
     @State private var searchText = ""
     @State private var expandedSections: Set<HealthState> = []
@@ -45,12 +46,10 @@ struct ContentView: View {
                     }
                 } else {
                     List {
-                        if let greeting, searchText.isEmpty {
+                        if searchText.isEmpty {
                             Section {
                             } header: {
-                                Text(greeting)
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
+                                greetingHeader
                             }
                         }
                         ForEach(sections, id: \.state) { section in
@@ -60,6 +59,7 @@ struct ContentView: View {
                                         NavigationLink(value: person) {
                                             PersonRow(person: person)
                                         }
+                                        .listRowBackground(Theme.card)
                                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                                             Button {
                                                 quickLog(person)
@@ -87,17 +87,24 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
                     .searchable(text: $searchText, prompt: "Search people")
                     .refreshable {
                         ContactsManager.shared.refresh(people)
                     }
                 }
             }
+            .background(Theme.canvas.ignoresSafeArea())
             .navigationDestination(for: Person.self) { person in
                 PersonDetailView(person: person)
             }
             .navigationTitle("Weave")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Settings", systemImage: "gearshape") {
+                        showingSettings = true
+                    }
+                }
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
                         Button("From Contacts", systemImage: "person.crop.circle.badge.plus") {
@@ -120,6 +127,9 @@ struct ContentView: View {
             .sheet(isPresented: $showingManualAdd) {
                 AddManualPersonSheet()
             }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
+            }
             .task {
                 #if DEBUG
                 if DemoData.isRequested {
@@ -127,6 +137,9 @@ struct ContentView: View {
                 }
                 if DemoData.shouldShowManualAdd {
                     showingManualAdd = true
+                }
+                if DemoData.shouldShowSettings {
+                    showingSettings = true
                 }
                 if DemoData.shouldOpenFirstPerson {
                     let everyone = (try? modelContext.fetch(FetchDescriptor<Person>())) ?? []
@@ -140,17 +153,66 @@ struct ContentView: View {
         }
     }
 
-    // MARK: - Sections
+    // MARK: - Greeting
 
-    private var greeting: String? {
+    private var greetingHeader: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(dayGreeting)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(greeting)
+                .font(.title3)
+                .fontDesign(.serif)
+                .foregroundStyle(.primary)
+            if let upcomingBirthday {
+                Label(upcomingBirthday, systemImage: "birthday.cake")
+                    .font(.caption)
+                    .foregroundStyle(Color.accentColor)
+            }
+        }
+        .textCase(nil)
+        .padding(.bottom, 4)
+    }
+
+    private var dayGreeting: String {
+        let weekday = Date.now.formatted(.dateTime.weekday(.wide))
+        let hour = Calendar.current.component(.hour, from: .now)
+        let part = hour < 12 ? "morning" : (hour < 17 ? "afternoon" : "evening")
+        return "\(weekday) \(part)"
+    }
+
+    private var greeting: String {
         let due = people.filter {
             $0.healthState == .overdue || $0.healthState == .drifting
         }.count
-        guard due > 0 else { return nil }
-        return due == 1
-            ? "1 person would love to hear from you"
-            : "\(due) people would love to hear from you"
+        switch due {
+        case 0: return "Everyone's in touch"
+        case 1: return "1 person would love to hear from you"
+        default: return "\(due) people would love to hear from you"
+        }
     }
+
+    private var upcomingBirthday: String? {
+        let upcoming = people
+            .filter { !$0.isPaused }
+            .compactMap { person -> (name: String, days: Int)? in
+                guard let days = person.daysUntilNextBirthday, days <= 45 else { return nil }
+                return (person.name, days)
+            }
+            .min { $0.days < $1.days }
+        guard let upcoming else { return nil }
+        let first = upcoming.name.split(separator: " ").first.map(String.init) ?? upcoming.name
+        let when: String
+        switch upcoming.days {
+        case 0: when = "today"
+        case 1: when = "tomorrow"
+        case ..<14: when = "in \(upcoming.days) days"
+        default: when = "in \(upcoming.days / 7) weeks"
+        }
+        return "\(first)'s birthday \(when)"
+    }
+
+    // MARK: - Sections
 
     private func isExpanded(_ state: HealthState) -> Bool {
         !state.collapsedByDefault || expandedSections.contains(state) || !searchText.isEmpty
@@ -173,9 +235,12 @@ struct ContentView: View {
                     Image(systemName: isExpanded(state) ? "chevron.down" : "chevron.forward")
                         .font(.caption2.weight(.semibold))
                 }
+                .foregroundStyle(state.color)
             }
+            .buttonStyle(.plain)
         } else {
             Text("\(state.label) · \(count)")
+                .foregroundStyle(state.color)
         }
     }
 
@@ -185,6 +250,7 @@ struct ContentView: View {
         let interaction = Interaction(type: .other, source: .manual)
         modelContext.insert(interaction)
         interaction.person = person
+        Haptics.logged()
     }
 
     private func addFromContacts() {

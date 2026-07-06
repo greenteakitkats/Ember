@@ -85,6 +85,32 @@ final class Person {
         return "quiet \(over / 30)mo"
     }
 
+    /// How full the relationship "battery" is: 1 right after contact,
+    /// draining toward the cadence deadline. Never fully empty — an
+    /// overdue person keeps a small ember, not a guilt-void.
+    var ringFraction: Double {
+        if isPaused { return 0 }
+        guard let ratio = overdueRatio else { return 1 }
+        return max(0.08, 1 - ratio)
+    }
+
+    var daysUntilNextBirthday: Int? {
+        guard let birthday else { return nil }
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.month, .day], from: birthday)
+        let today = calendar.startOfDay(for: .now)
+        let todayComponents = calendar.dateComponents([.month, .day], from: today)
+        if todayComponents.month == components.month && todayComponents.day == components.day {
+            return 0
+        }
+        guard let next = calendar.nextDate(
+            after: today,
+            matching: components,
+            matchingPolicy: .nextTimePreservingSmallerComponents
+        ) else { return nil }
+        return calendar.dateComponents([.day], from: today, to: calendar.startOfDay(for: next)).day
+    }
+
     /// Most recent interaction of a given type — powers "last seen in
     /// person" and "last gift" without the user maintaining anything.
     func lastDate(of type: InteractionType) -> Date? {
@@ -166,11 +192,11 @@ enum HealthState: Int, CaseIterable, Identifiable {
 
     var color: Color {
         switch self {
-        case .overdue: .red
-        case .drifting: .orange
-        case .onTrack: .green
-        case .unranked: .blue
-        case .paused: .gray
+        case .overdue: Color(light: 0xC94E2C, dark: 0xE8724E)
+        case .drifting: Color(light: 0xB07514, dark: 0xE0A33B)
+        case .onTrack: Color(light: 0x6B7F4A, dark: 0x9BB472)
+        case .unranked: Color(light: 0x8A7A6D, dark: 0xAA9B8D)
+        case .paused: Color(light: 0x9A918A, dark: 0x847C74)
         }
     }
 

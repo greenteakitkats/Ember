@@ -14,20 +14,25 @@ struct LogInteractionSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Picker("Type", selection: $type) {
-                    ForEach(InteractionType.allCases) { type in
-                        Label(type.label, systemImage: type.icon).tag(type)
+                Section {
+                    Picker("Type", selection: $type) {
+                        ForEach(InteractionType.allCases) { type in
+                            Label(type.label, systemImage: type.icon).tag(type)
+                        }
                     }
+                    DatePicker(
+                        "When",
+                        selection: $date,
+                        in: ...Date.now,
+                        displayedComponents: [.date]
+                    )
+                    TextField("Note (optional)", text: $note, axis: .vertical)
+                        .lineLimit(2...5)
                 }
-                DatePicker(
-                    "When",
-                    selection: $date,
-                    in: ...Date.now,
-                    displayedComponents: [.date]
-                )
-                TextField("Note (optional)", text: $note, axis: .vertical)
-                    .lineLimit(2...5)
+                .listRowBackground(Theme.card)
             }
+            .scrollContentBackground(.hidden)
+            .background(Theme.canvas.ignoresSafeArea())
             .navigationTitle("Log Interaction")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -44,6 +49,7 @@ struct LogInteractionSheet: View {
                         )
                         modelContext.insert(interaction)
                         interaction.person = person
+                        Haptics.logged()
                         dismiss()
                     }
                 }

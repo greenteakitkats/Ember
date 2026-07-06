@@ -17,17 +17,25 @@ struct PersonDetailView: View {
     var body: some View {
         List {
             headerSection
+                .listRowBackground(Theme.card)
             recallSection
+                .listRowBackground(Theme.card)
             outreachSection
             if person.lastContactDate == nil && !person.isPaused {
                 seedSection
+                    .listRowBackground(Theme.card)
             }
             if person.phoneNumber != nil || person.email != nil {
                 contactSection
+                    .listRowBackground(Theme.card)
             }
             settingsSection
+                .listRowBackground(Theme.card)
             historySection
+                .listRowBackground(Theme.card)
         }
+        .scrollContentBackground(.hidden)
+        .background(Theme.canvas.ignoresSafeArea())
         .navigationTitle(person.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -301,6 +309,7 @@ struct PersonDetailView: View {
             let interaction = Interaction(type: type, source: .outreach)
             modelContext.insert(interaction)
             interaction.person = person
+            Haptics.logged()
             showUndo(for: interaction)
         }
     }
@@ -318,8 +327,13 @@ struct PersonDetailView: View {
 
     private func undoBanner(for interaction: Interaction) -> some View {
         HStack(spacing: 16) {
-            Text("\(interaction.type.label) logged")
-                .font(.subheadline)
+            HStack(spacing: 8) {
+                Image(systemName: "heart.fill")
+                    .foregroundStyle(Color.accentColor)
+                    .symbolEffect(.bounce, value: undoableInteraction)
+                Text("\(interaction.type.label) logged")
+                    .font(.subheadline)
+            }
             Spacer()
             Button("Add note") {
                 undoDismissTask?.cancel()

@@ -32,6 +32,10 @@ enum DemoData {
         ProcessInfo.processInfo.arguments.contains("-showLogSheet")
     }
 
+    static var shouldShowSettings: Bool {
+        ProcessInfo.processInfo.arguments.contains("-showSettings")
+    }
+
     static func seed(into context: ModelContext) {
         try? context.delete(model: Interaction.self)
         try? context.delete(model: Person.self)

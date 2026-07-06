@@ -24,6 +24,7 @@ struct CaptureSheet: View {
                 } footer: {
                     Text("You'll see this at the top of their card next time, before you reach out.")
                 }
+                .listRowBackground(Theme.card)
                 Section {
                     HStack(spacing: 8) {
                         Image(systemName: "questionmark.bubble")
@@ -31,7 +32,10 @@ struct CaptureSheet: View {
                         TextField("Next time, ask about…", text: askAboutBinding)
                     }
                 }
+                .listRowBackground(Theme.card)
             }
+            .scrollContentBackground(.hidden)
+            .background(Theme.canvas.ignoresSafeArea())
             .navigationTitle("Quick Note")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

@@ -18,21 +18,26 @@ struct AddManualPersonSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Name", text: $name)
-                    .textContentType(.name)
-                TextField("Phone (optional)", text: $phone)
-                    .textContentType(.telephoneNumber)
-                    .keyboardType(.phonePad)
-                TextField("Email (optional)", text: $email)
-                    .textContentType(.emailAddress)
-                    .keyboardType(.emailAddress)
-                    .textInputAutocapitalization(.never)
-                Picker("Cadence", selection: $cadence) {
-                    ForEach(Cadence.allCases) { cadence in
-                        Text(cadence.label).tag(cadence)
+                Section {
+                    TextField("Name", text: $name)
+                        .textContentType(.name)
+                    TextField("Phone (optional)", text: $phone)
+                        .textContentType(.telephoneNumber)
+                        .keyboardType(.phonePad)
+                    TextField("Email (optional)", text: $email)
+                        .textContentType(.emailAddress)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                    Picker("Cadence", selection: $cadence) {
+                        ForEach(Cadence.allCases) { cadence in
+                            Text(cadence.label).tag(cadence)
+                        }
                     }
                 }
+                .listRowBackground(Theme.card)
             }
+            .scrollContentBackground(.hidden)
+            .background(Theme.canvas.ignoresSafeArea())
             .navigationTitle("Add Person")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
