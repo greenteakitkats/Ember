@@ -39,7 +39,7 @@ struct ContentView: View {
                     ContentUnavailableView {
                         Label("No one here yet", systemImage: "person.2")
                     } description: {
-                        Text("Add the people you want to stay close to. Weave keeps track of who's drifting.")
+                        Text("Add the people you want to stay close to. Ember keeps track of who's drifting.")
                     } actions: {
                         Button("Add from Contacts") { addFromContacts() }
                             .buttonStyle(.borderedProminent)

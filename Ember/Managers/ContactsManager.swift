@@ -29,7 +29,7 @@ final class ContactsManager {
         return (try? await store.requestAccess(for: .contacts)) ?? false
     }
 
-    /// Copies the fields Weave caches from a system contact onto a Person.
+    /// Copies the fields Ember caches from a system contact onto a Person.
     func apply(_ contact: CNContact, to person: Person) {
         person.contactIdentifier = contact.identifier
         person.contactLinkBroken = false
@@ -68,7 +68,7 @@ final class ContactsManager {
                 )
                 apply(contact, to: person)
             } catch {
-                // Contact was deleted or is unavailable; keep Weave's copy.
+                // Contact was deleted or is unavailable; keep Ember's copy.
                 person.contactLinkBroken = true
             }
         }

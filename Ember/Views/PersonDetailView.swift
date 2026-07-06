@@ -41,7 +41,7 @@ struct PersonDetailView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu {
-                    Button("Remove from Weave", systemImage: "trash", role: .destructive) {
+                    Button("Remove from Ember", systemImage: "trash", role: .destructive) {
                         showingDeleteConfirm = true
                     }
                 } label: {
@@ -50,7 +50,7 @@ struct PersonDetailView: View {
             }
         }
         .confirmationDialog(
-            "Remove \(person.name) from Weave? Their interaction history will be deleted. Your iOS contact is not affected.",
+            "Remove \(person.name) from Ember? Their interaction history will be deleted. Your iOS contact is not affected.",
             isPresented: $showingDeleteConfirm,
             titleVisibility: .visible
         ) {
@@ -109,7 +109,7 @@ struct PersonDetailView: View {
                 }
             }
             if person.contactLinkBroken {
-                Label("This person's contact card was deleted from iOS Contacts. Weave kept its copy.", systemImage: "exclamationmark.triangle")
+                Label("This person's contact card was deleted from iOS Contacts. Ember kept its copy.", systemImage: "exclamationmark.triangle")
                     .font(.caption)
                     .foregroundStyle(.orange)
             }

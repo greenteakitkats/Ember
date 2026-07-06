@@ -65,13 +65,13 @@ enum InteractionType: String, CaseIterable, Identifiable {
 
 enum InteractionSource: String {
     case manual
-    case outreach   // logged automatically because outreach started from Weave
+    case outreach   // logged automatically because outreach started from Ember
     case calendar   // future: confirmed from a calendar match
 
     var label: String {
         switch self {
         case .manual: "Logged manually"
-        case .outreach: "Started from Weave"
+        case .outreach: "Started from Ember"
         case .calendar: "From calendar"
         }
     }

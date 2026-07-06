@@ -1,4 +1,4 @@
-# Weave — Product Spec (v1)
+# Ember — Product Spec (v1)
 
 **Platform:** iOS 17+, SwiftUI + SwiftData
 **Author:** Ryan
@@ -11,19 +11,19 @@
 
 Living far from the people you care about removes the casual everyday moments that keep relationships warm. Without bumping into friends at work, the gym, or around the neighborhood, staying in touch requires deliberate effort, and good intentions reliably lose to busy weeks. The cost is real: relationships you value quietly decay, and by the time you notice, reaching out feels awkward.
 
-Weave is a personal CRM that makes deliberate outreach nearly effortless: it tracks who you know, when you last connected, and who is drifting, then prompts you at the rhythm you choose.
+Ember is a personal CRM that makes deliberate outreach nearly effortless: it tracks who you know, when you last connected, and who is drifting, then prompts you at the rhythm you choose.
 
 ## Goals
 
 1. **Never unknowingly lose touch.** Every tracked relationship has a visible health state at all times; nobody goes "red" without the app having surfaced them first.
-2. **Make logging nearly free.** Logging an interaction takes one tap in the common case (outreach started from Weave, or a calendar match confirmed).
+2. **Make logging nearly free.** Logging an interaction takes one tap in the common case (outreach started from Ember, or a calendar match confirmed).
 3. **Prompt without nagging.** Reminders arrive on the user's schedule, respect snoozes, and never guilt-trip. The app should feel like a thoughtful assistant, not a chore tracker.
 4. **Be trustworthy with intimate data.** All relationship data lives on device. No accounts, no servers, no analytics.
 5. **Ship a usable v1 within ~4 weeks of part-time work,** then iterate through daily personal use across a 100+ person network.
 
 ## Non-Goals (v1)
 
-- **No automatic reading of calls/messages.** iOS does not allow it; designing around a capability that doesn't exist wastes effort. Smart logging comes from Weave-initiated outreach and calendar matching instead.
+- **No automatic reading of calls/messages.** iOS does not allow it; designing around a capability that doesn't exist wastes effort. Smart logging comes from Ember-initiated outreach and calendar matching instead.
 - **No iCloud/CloudKit sync.** Requires a paid developer account (same constraint hit on Evenly). Data model should be CloudKit-compatible so sync can be enabled later without migration pain.
 - **No social features.** No sharing, no "networks," no comparing. This is a single-player tool by design.
 - **No Android/web version.** iOS-only keeps focus. The concept doc's "web app" framing is portfolio narrative, not a build target.
@@ -40,7 +40,7 @@ Ordered by priority.
 **Core loop**
 - As someone with a scattered network, I want to import the people I care about from my iPhone contacts so that setup takes minutes, not hours.
 - As a busy person, I want to see a ranked list of who I haven't talked to in too long so that I know exactly who to reach out to today.
-- As someone reaching out, I want to call/text/email a person directly from their card in Weave so that the interaction is logged automatically the moment I start it.
+- As someone reaching out, I want to call/text/email a person directly from their card in Ember so that the interaction is logged automatically the moment I start it.
 - As a forgetful logger, I want interactions inferred from my calendar (events with matched attendees) so that dinners and calls count without manual entry.
 - As someone who saw a friend spontaneously, I want to log a past interaction with a backdate in two taps so that my history stays accurate.
 
@@ -64,7 +64,7 @@ Ordered by priority.
 
 **Edge cases**
 - As a new user with zero data, I want an onboarding flow that imports contacts and bulk-assigns cadences quickly (triage-style) so that the app is useful on day one.
-- As a user whose contact has no birthday in iOS Contacts, I want to add one in Weave without editing the system contact.
+- As a user whose contact has no birthday in iOS Contacts, I want to add one in Ember without editing the system contact.
 - As a privacy-conscious user, I want to export all my data (JSON/CSV) so that I'm never locked in.
 
 ## Requirements
@@ -72,20 +72,20 @@ Ordered by priority.
 ### Must-Have (P0)
 
 **P0-1. Contact import & sync**
-Import via contact picker (curated selection, not full address book). Each Weave contact links to its `CNContact` identifier; name, photo, phones, emails, and birthday stay synced from the system.
+Import via contact picker (curated selection, not full address book). Each Ember contact links to its `CNContact` identifier; name, photo, phones, emails, and birthday stay synced from the system.
 - [ ] User can multi-select contacts from the system picker during onboarding and anytime after
-- [ ] Weave reflects changes to a linked system contact (name/photo/number) on next launch
-- [ ] A contact deleted from iOS Contacts degrades gracefully (Weave keeps its copy, flags the broken link)
-- [ ] User can create a Weave-only contact manually (person not in address book)
+- [ ] Ember reflects changes to a linked system contact (name/photo/number) on next launch
+- [ ] A contact deleted from iOS Contacts degrades gracefully (Ember keeps its copy, flags the broken link)
+- [ ] User can create a Ember-only contact manually (person not in address book)
 
 **P0-2. Interaction log**
 Per-contact chronological history of interactions with type (call, message, email, in person, other), timestamp, and optional note.
 - [ ] Manual log in ≤2 taps from contact card or ranked list (long-press quick action)
 - [ ] Manual log supports backdating
 - [ ] Interactions can be deleted (deliberately no edit UI — delete + relog covers the rare mistake with less surface)
-- [ ] Log entry shows how it was captured (manual, via Weave outreach, calendar)
+- [ ] Log entry shows how it was captured (manual, via Ember outreach, calendar)
 
-**P0-3. Weave-initiated outreach = automatic log**
+**P0-3. Ember-initiated outreach = automatic log**
 Call / Message / Email buttons on the contact card deep-link to the system app and log the interaction.
 - [ ] Given a contact with a phone number, when user taps Call or Message, then the system app opens and an interaction is logged with the correct type
 - [ ] A just-logged outreach shows an undo affordance (tapped by accident ≠ interaction)
@@ -106,7 +106,7 @@ One local notification per day at a user-chosen time summarizing who is due and 
 **P0-6. Birthdays & milestones**
 Birthdays imported from Contacts; custom milestones (one-off or recurring) per contact with configurable lead-time reminders.
 - [ ] Birthday appears in digest at lead time (default 3 days) and day-of
-- [ ] User can add a birthday in Weave without modifying the system contact
+- [ ] User can add a birthday in Ember without modifying the system contact
 - [ ] Custom milestone with title, date, recurrence (none/yearly), lead time
 
 **P0-7. Onboarding triage**
@@ -127,13 +127,13 @@ After import, a fast flow to assign cadence and rough "last talked" to each pers
 - *Ask next time:* a single-line "next time, ask about…" field that surfaces before outreach and clears once used
 *Build this first among P1s: it changes what an interaction is (from "contact happened" to "I remembered their life").*
 
-**P1-2. Calendar matching (EventKit).** Scan recent/upcoming events, match attendees to Weave contacts by email/name, suggest interactions ("Dinner with Sarah on Tuesday — log it?"). Suggestions require one-tap confirmation, never auto-log. Biggest magic-feel feature; second among P1s.
+**P1-2. Calendar matching (EventKit).** Scan recent/upcoming events, match attendees to Ember contacts by email/name, suggest interactions ("Dinner with Sarah on Tuesday — log it?"). Suggestions require one-tap confirmation, never auto-log. Biggest magic-feel feature; second among P1s.
 
 **P1-3. Local time per contact.** City/time zone field; contact card and list rows show their current local time and a "probably asleep" hint. Directly serves the overseas origin story.
 
 **P1-4. Circles (tags).** Assign contacts to groups; filter ranked list by circle; new-contact cadence defaults per circle.
 
-**P1-5. Home screen widget.** *(Built July 2026.)* Small/medium widget: "N people miss you" plus the top drifting people. Shares the SwiftData store via app group `group.ryantdo.Weave`, with a local-store fallback if the group is unavailable.
+**P1-5. Home screen widget.** *(Built July 2026.)* Small/medium widget: "N people miss you" plus the top drifting people. Shares the SwiftData store via app group `group.ryantdo.Ember`, with a local-store fallback if the group is unavailable.
 
 **P1-6. Data export.** JSON export of contacts, interactions, milestones from Settings.
 
@@ -152,7 +152,7 @@ After import, a fast flow to assign cadence and rough "last talked" to each pers
 Personal-use product, so metrics are honest self-measures plus portfolio outcomes.
 
 **Leading (first 30 days of daily use)**
-- ≥5 interactions logged per week, with ≥50% captured automatically (Weave-initiated or calendar-confirmed) rather than manual
+- ≥5 interactions logged per week, with ≥50% captured automatically (Ember-initiated or calendar-confirmed) rather than manual
 - Daily digest opened ≥4 days/week
 - Onboarding triage of full network completed within first week
 

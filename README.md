@@ -1,8 +1,8 @@
-# Weave
+# Ember
 
 A personal CRM for iOS. Track the people you care about, see who's drifting, and get prompted to reach out before relationships quietly fade.
 
-Weave started from living overseas: without the casual everyday moments that keep relationships warm, it was easy to lose touch with people I genuinely cared about, even with good intentions.
+Ember started from living overseas: without the casual everyday moments that keep relationships warm, it was easy to lose touch with people I genuinely cared about, even with good intentions.
 
 ## What it does
 

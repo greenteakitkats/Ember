@@ -3,7 +3,7 @@ import SwiftData
 import SwiftUI
 
 @main
-struct WeaveApp: App {
+struct EmberApp: App {
     private let container: ModelContainer
 
     @AppStorage("appearanceMode") private var appearanceModeRaw = AppearanceMode.system.rawValue
@@ -15,7 +15,7 @@ struct WeaveApp: App {
         do {
             container = try SharedStore.modelContainer()
         } catch {
-            fatalError("Could not create the Weave data store: \(error)")
+            fatalError("Could not create the Ember data store: \(error)")
         }
         _isUnlocked = State(initialValue: !UserDefaults.standard.bool(forKey: "appLockEnabled"))
     }
@@ -60,7 +60,7 @@ struct WeaveApp: App {
         }
         let unlocked = (try? await context.evaluatePolicy(
             .deviceOwnerAuthentication,
-            localizedReason: "Weave keeps your people and notes private."
+            localizedReason: "Ember keeps your people and notes private."
         )) ?? false
         if unlocked {
             isUnlocked = true
@@ -78,7 +78,7 @@ private struct LockView: View {
                 Image(systemName: "heart.circle.fill")
                     .font(.system(size: 52))
                     .foregroundStyle(Color.accentColor)
-                Text("Weave is locked")
+                Text("Ember is locked")
                     .font(.title3)
                     .fontDesign(.serif)
                 Button("Unlock") {

@@ -3,7 +3,7 @@ import Foundation
 import SwiftData
 
 /// Launch-argument hooks for simulator screenshots and manual testing:
-///   xcrun simctl launch <device> ryantdo.Weave -demoData
+///   xcrun simctl launch <device> ryantdo.Ember -demoData
 ///   -demoData        wipes the store and seeds a sample network
 ///   -openFirstPerson navigates to the most overdue person on launch
 ///   -showManualAdd   presents the manual add sheet on launch

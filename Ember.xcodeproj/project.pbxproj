@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BB00000100000000000000C4 /* WeaveWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB00000100000000000000B1 /* WeaveWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BB00000100000000000000C4 /* EmberWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB00000100000000000000B1 /* EmberWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -16,7 +16,7 @@
 			containerPortal = BB00000100000000000000A6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = BB00000100000000000000B4;
-			remoteInfo = WeaveWidgetExtension;
+			remoteInfo = EmberWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -27,7 +27,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				BB00000100000000000000C4 /* WeaveWidgetExtension.appex in Embed Foundation Extensions */,
+				BB00000100000000000000C4 /* EmberWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -35,32 +35,32 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BB00000100000000000000A1 /* Weave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weave.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB00000100000000000000B1 /* WeaveWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WeaveWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB00000100000000000000A1 /* Ember.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ember.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB00000100000000000000B1 /* EmberWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmberWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		BB00000100000000000000C2 /* Exceptions for "WeaveWidget" folder in "WeaveWidgetExtension" target */ = {
+		BB00000100000000000000C2 /* Exceptions for "EmberWidget" folder in "EmberWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = BB00000100000000000000B4 /* WeaveWidgetExtension */;
+			target = BB00000100000000000000B4 /* EmberWidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BB00000100000000000000A4 /* Weave */ = {
+		BB00000100000000000000A4 /* Ember */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Weave;
+			path = Ember;
 			sourceTree = "<group>";
 		};
-		BB00000100000000000000B2 /* WeaveWidget */ = {
+		BB00000100000000000000B2 /* EmberWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				BB00000100000000000000C2 /* Exceptions for "WeaveWidget" folder in "WeaveWidgetExtension" target */,
+				BB00000100000000000000C2 /* Exceptions for "EmberWidget" folder in "EmberWidgetExtension" target */,
 			);
-			path = WeaveWidget;
+			path = EmberWidget;
 			sourceTree = "<group>";
 		};
 		BB00000100000000000000B3 /* Shared */ = {
@@ -91,9 +91,9 @@
 		BB00000100000000000000A2 = {
 			isa = PBXGroup;
 			children = (
-				BB00000100000000000000A4 /* Weave */,
+				BB00000100000000000000A4 /* Ember */,
 				BB00000100000000000000B3 /* Shared */,
-				BB00000100000000000000B2 /* WeaveWidget */,
+				BB00000100000000000000B2 /* EmberWidget */,
 				BB00000100000000000000A3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -101,8 +101,8 @@
 		BB00000100000000000000A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BB00000100000000000000A1 /* Weave.app */,
-				BB00000100000000000000B1 /* WeaveWidgetExtension.appex */,
+				BB00000100000000000000A1 /* Ember.app */,
+				BB00000100000000000000B1 /* EmberWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -110,9 +110,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BB00000100000000000000A5 /* Weave */ = {
+		BB00000100000000000000A5 /* Ember */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB00000100000000000000AB /* Build configuration list for PBXNativeTarget "Weave" */;
+			buildConfigurationList = BB00000100000000000000AB /* Build configuration list for PBXNativeTarget "Ember" */;
 			buildPhases = (
 				BB00000100000000000000A7 /* Sources */,
 				BB00000100000000000000A8 /* Frameworks */,
@@ -125,19 +125,19 @@
 				BB00000100000000000000C5 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				BB00000100000000000000A4 /* Weave */,
+				BB00000100000000000000A4 /* Ember */,
 				BB00000100000000000000B3 /* Shared */,
 			);
-			name = Weave;
+			name = Ember;
 			packageProductDependencies = (
 			);
-			productName = Weave;
-			productReference = BB00000100000000000000A1 /* Weave.app */;
+			productName = Ember;
+			productReference = BB00000100000000000000A1 /* Ember.app */;
 			productType = "com.apple.product-type.application";
 		};
-		BB00000100000000000000B4 /* WeaveWidgetExtension */ = {
+		BB00000100000000000000B4 /* EmberWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB00000100000000000000B8 /* Build configuration list for PBXNativeTarget "WeaveWidgetExtension" */;
+			buildConfigurationList = BB00000100000000000000B8 /* Build configuration list for PBXNativeTarget "EmberWidgetExtension" */;
 			buildPhases = (
 				BB00000100000000000000B5 /* Sources */,
 				BB00000100000000000000B6 /* Frameworks */,
@@ -148,14 +148,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				BB00000100000000000000B2 /* WeaveWidget */,
+				BB00000100000000000000B2 /* EmberWidget */,
 				BB00000100000000000000B3 /* Shared */,
 			);
-			name = WeaveWidgetExtension;
+			name = EmberWidgetExtension;
 			packageProductDependencies = (
 			);
-			productName = WeaveWidgetExtension;
-			productReference = BB00000100000000000000B1 /* WeaveWidgetExtension.appex */;
+			productName = EmberWidgetExtension;
+			productReference = BB00000100000000000000B1 /* EmberWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -176,7 +176,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BB00000100000000000000AA /* Build configuration list for PBXProject "Weave" */;
+			buildConfigurationList = BB00000100000000000000AA /* Build configuration list for PBXProject "Ember" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -190,8 +190,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BB00000100000000000000A5 /* Weave */,
-				BB00000100000000000000B4 /* WeaveWidgetExtension */,
+				BB00000100000000000000A5 /* Ember */,
+				BB00000100000000000000B4 /* EmberWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -233,7 +233,7 @@
 /* Begin PBXTargetDependency section */
 		BB00000100000000000000C5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BB00000100000000000000B4 /* WeaveWidgetExtension */;
+			target = BB00000100000000000000B4 /* EmberWidgetExtension */;
 			targetProxy = BB00000100000000000000C6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -244,14 +244,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Weave/Weave.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Ember/Ember.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VGF2H2R97B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSContactsUsageDescription = "Weave links the people you choose to their contact cards so names, photos, phone numbers, and birthdays stay up to date. Nothing leaves your device.";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Weave locks your people and notes until you authenticate.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Ember links the people you choose to their contact cards so names, photos, phone numbers, and birthdays stay up to date. Nothing leaves your device.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Ember locks your people and notes until you authenticate.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -262,7 +262,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Weave;
+				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Ember;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -277,14 +277,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Weave/Weave.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Ember/Ember.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VGF2H2R97B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSContactsUsageDescription = "Weave links the people you choose to their contact cards so names, photos, phone numbers, and birthdays stay up to date. Nothing leaves your device.";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Weave locks your people and notes until you authenticate.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "Ember links the people you choose to their contact cards so names, photos, phone numbers, and birthdays stay up to date. Nothing leaves your device.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Ember locks your people and notes until you authenticate.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -295,7 +295,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Weave;
+				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Ember;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -427,20 +427,20 @@
 		BB00000100000000000000B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WeaveWidget/WeaveWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = EmberWidget/EmberWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VGF2H2R97B;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WeaveWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Weave;
+				INFOPLIST_FILE = EmberWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ember;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Weave.WeaveWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Ember.EmberWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -454,20 +454,20 @@
 		BB00000100000000000000C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = WeaveWidget/WeaveWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = EmberWidget/EmberWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VGF2H2R97B;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WeaveWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Weave;
+				INFOPLIST_FILE = EmberWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Ember;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Weave.WeaveWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = ryantdo.Ember.EmberWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -481,7 +481,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BB00000100000000000000AA /* Build configuration list for PBXProject "Weave" */ = {
+		BB00000100000000000000AA /* Build configuration list for PBXProject "Ember" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB00000100000000000000AE /* Debug */,
@@ -490,7 +490,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BB00000100000000000000AB /* Build configuration list for PBXNativeTarget "Weave" */ = {
+		BB00000100000000000000AB /* Build configuration list for PBXNativeTarget "Ember" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB00000100000000000000AC /* Debug */,
@@ -499,7 +499,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BB00000100000000000000B8 /* Build configuration list for PBXNativeTarget "WeaveWidgetExtension" */ = {
+		BB00000100000000000000B8 /* Build configuration list for PBXNativeTarget "EmberWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BB00000100000000000000B9 /* Debug */,

@@ -6,7 +6,7 @@ import SwiftData
 /// group isn't available (e.g. unsigned simulator builds), so the app
 /// keeps working even if provisioning hiccups.
 enum SharedStore {
-    static let appGroupID = "group.ryantdo.Weave"
+    static let appGroupID = "group.ryantdo.Ember"
 
     static func modelContainer() throws -> ModelContainer {
         let schema = Schema([Person.self, Interaction.self])
@@ -16,7 +16,7 @@ enum SharedStore {
         ) {
             configuration = ModelConfiguration(
                 schema: schema,
-                url: groupURL.appendingPathComponent("Weave.store")
+                url: groupURL.appendingPathComponent("Ember.store")
             )
         } else {
             configuration = ModelConfiguration(schema: schema)

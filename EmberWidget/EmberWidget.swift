@@ -3,16 +3,16 @@ import SwiftUI
 import WidgetKit
 
 @main
-struct WeaveWidgetBundle: WidgetBundle {
+struct EmberWidgetBundle: WidgetBundle {
     var body: some Widget {
-        WeaveWidget()
+        EmberWidget()
     }
 }
 
-struct WeaveWidget: Widget {
+struct EmberWidget: Widget {
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: "WeaveWidget", provider: Provider()) { entry in
-            WeaveWidgetView(entry: entry)
+        StaticConfiguration(kind: "EmberWidget", provider: Provider()) { entry in
+            EmberWidgetView(entry: entry)
                 .containerBackground(Theme.canvas, for: .widget)
         }
         .configurationDisplayName("Reach out")
@@ -36,15 +36,15 @@ struct PersonLine: Identifiable {
     }
 }
 
-struct WeaveEntry: TimelineEntry {
+struct EmberEntry: TimelineEntry {
     let date: Date
     let lines: [PersonLine]
     let quietCount: Int
 }
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> WeaveEntry {
-        WeaveEntry(
+    func placeholder(in context: Context) -> EmberEntry {
+        EmberEntry(
             date: .now,
             lines: [
                 placeholderLine(name: "Kenji Watanabe", detail: "quiet 3mo", fraction: 0.08),
@@ -67,18 +67,18 @@ struct Provider: TimelineProvider {
         )
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (WeaveEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (EmberEntry) -> Void) {
         completion(makeEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<WeaveEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<EmberEntry>) -> Void) {
         let refresh = Calendar.current.date(byAdding: .hour, value: 2, to: .now) ?? .now
         completion(Timeline(entries: [makeEntry()], policy: .after(refresh)))
     }
 
-    private func makeEntry() -> WeaveEntry {
+    private func makeEntry() -> EmberEntry {
         guard let container = try? SharedStore.modelContainer() else {
-            return WeaveEntry(date: .now, lines: [], quietCount: 0)
+            return EmberEntry(date: .now, lines: [], quietCount: 0)
         }
         let context = ModelContext(container)
         let people = (try? context.fetch(FetchDescriptor<Person>())) ?? []
@@ -97,13 +97,13 @@ struct Provider: TimelineProvider {
                 avatarText: colors.text
             )
         }
-        return WeaveEntry(date: .now, lines: lines, quietCount: due.count)
+        return EmberEntry(date: .now, lines: lines, quietCount: due.count)
     }
 }
 
-struct WeaveWidgetView: View {
+struct EmberWidgetView: View {
     @Environment(\.widgetFamily) private var family
-    let entry: WeaveEntry
+    let entry: EmberEntry
 
     var body: some View {
         Group {
