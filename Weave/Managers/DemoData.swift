@@ -20,6 +20,18 @@ enum DemoData {
         ProcessInfo.processInfo.arguments.contains("-showManualAdd")
     }
 
+    static var shouldSimulateOutreach: Bool {
+        ProcessInfo.processInfo.arguments.contains("-simulateOutreach")
+    }
+
+    static var shouldShowCaptureSheet: Bool {
+        ProcessInfo.processInfo.arguments.contains("-showCaptureSheet")
+    }
+
+    static var shouldShowLogSheet: Bool {
+        ProcessInfo.processInfo.arguments.contains("-showLogSheet")
+    }
+
     static func seed(into context: ModelContext) {
         try? context.delete(model: Interaction.self)
         try? context.delete(model: Person.self)
@@ -72,6 +84,7 @@ enum DemoData {
         )
         kenji.phoneNumbers = ["+81 90 1234 5678", "+1 (555) 010-4455"]
         kenji.emails = ["kenji@example.com"]
+        kenji.askAboutNext = "How the apartment hunt ended"
         log(kenji, .call, daysAgo: 200, note: "Caught up about his move")
         log(kenji, .inPerson, daysAgo: 320, note: "Dinner in Umeda before I flew home")
 

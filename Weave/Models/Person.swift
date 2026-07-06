@@ -18,6 +18,8 @@ final class Person {
     var birthday: Date?
     var cadenceRaw: String = Cadence.monthly.rawValue
     var notes: String = ""
+    // One-line reminder surfaced before outreach; cleared once asked.
+    var askAboutNext: String?
     var isPaused: Bool = false
     var contactLinkBroken: Bool = false
     // Onboarding seed for people whose real history predates the app.

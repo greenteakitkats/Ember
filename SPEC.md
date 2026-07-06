@@ -2,8 +2,8 @@
 
 **Platform:** iOS 17+, SwiftUI + SwiftData
 **Author:** Ryan
-**Status:** Draft for v1 build
-**Last updated:** July 1, 2026
+**Status:** Phase 1 built; notes loop in progress
+**Last updated:** July 5, 2026
 
 ---
 
@@ -82,7 +82,7 @@ Import via contact picker (curated selection, not full address book). Each Weave
 Per-contact chronological history of interactions with type (call, message, email, in person, other), timestamp, and optional note.
 - [ ] Manual log in ≤2 taps from contact card or ranked list (long-press quick action)
 - [ ] Manual log supports backdating
-- [ ] Interactions can be edited and deleted
+- [ ] Interactions can be deleted (deliberately no edit UI — delete + relog covers the rare mistake with less surface)
 - [ ] Log entry shows how it was captured (manual, via Weave outreach, calendar)
 
 **P0-3. Weave-initiated outreach = automatic log**
@@ -113,6 +113,7 @@ Birthdays imported from Contacts; custom milestones (one-off or recurring) per c
 After import, a fast flow to assign cadence and rough "last talked" to each person (bulk-assign by selection or swipe-through).
 - [ ] A 100-contact import can be fully triaged in under ~10 minutes
 - [ ] Skippable; untriaged contacts default to monthly/unranked
+- [ ] Absorbs the interim per-person "when did you last talk?" seeder on the contact card — one seeding concept, not two
 
 **P0-8. Local-first privacy**
 - [ ] All data in SwiftData on device; zero network calls in v1
@@ -120,22 +121,25 @@ After import, a fast flow to assign cadence and rough "last talked" to each pers
 
 ### Nice-to-Have (P1)
 
-**P1-1. Calendar matching (EventKit).** Scan recent/upcoming events, match attendees to Weave contacts by email/name, suggest interactions ("Dinner with Sarah on Tuesday — log it?"). Suggestions require one-tap confirmation, never auto-log. *This is the biggest magic-feel feature; it's P1 only because the core loop works without it. Build it first among P1s.*
+**P1-1. The notes loop.** The 30-second habit, built into the flow (upgraded from "talking points" after strong external validation — people are hand-rolling exactly this in Notion/spreadsheets/contact cards):
+- *Capture:* after an interaction logs, the confirmation banner offers "Add note" — what's going on in their life, while it's fresh
+- *Recall:* the person's note sits at the top of their card, above the outreach buttons — read first, then reach out
+- *Ask next time:* a single-line "next time, ask about…" field that surfaces before outreach and clears once used
+*Build this first among P1s: it changes what an interaction is (from "contact happened" to "I remembered their life").*
 
-**P1-2. Local time per contact.** City/time zone field; contact card and list rows show their current local time and a "probably asleep" hint. Directly serves the overseas origin story.
+**P1-2. Calendar matching (EventKit).** Scan recent/upcoming events, match attendees to Weave contacts by email/name, suggest interactions ("Dinner with Sarah on Tuesday — log it?"). Suggestions require one-tap confirmation, never auto-log. Biggest magic-feel feature; second among P1s.
 
-**P1-3. Circles (tags).** Assign contacts to groups; filter ranked list by circle; new-contact cadence defaults per circle.
+**P1-3. Local time per contact.** City/time zone field; contact card and list rows show their current local time and a "probably asleep" hint. Directly serves the overseas origin story.
 
-**P1-4. Talking points.** Lightweight structured prompts on the contact card ("last time you talked about…", "ask about…"), shown when composing outreach and in the digest.
+**P1-4. Circles (tags).** Assign contacts to groups; filter ranked list by circle; new-contact cadence defaults per circle.
 
 **P1-5. Home screen widget.** Small/medium widget: top 3 overdue people with tap-through to their card.
 
 **P1-6. Data export.** JSON export of contacts, interactions, milestones from Settings.
 
-**P1-7. Monthly recap.** A simple stats view: interactions logged, relationships moved from red to green, longest streaks. Warm tone, no shame mechanics.
-
 ### Future Considerations (P2)
 
+- **Monthly recap** (demoted from P1: warm and portfolio-pretty, but it decorates the loop rather than being part of it) — interactions logged, relationships moved red to green; no shame mechanics
 - **iCloud sync** (blocked on paid dev account; keep SwiftData models CloudKit-compatible: no unique constraints CloudKit can't handle, optional relationships, UUID ids)
 - **Smart cadence suggestions** based on observed interaction rhythm
 - **Share extension** ("log interaction with…" from anywhere)
@@ -171,7 +175,7 @@ Personal-use product, so metrics are honest self-measures plus portfolio outcome
 
 **Phase 2 (weeks 3–4): Rhythm.** P0-5, P0-6, P0-7. Digest, milestones, onboarding polish. This is the "v1 done" line.
 
-**Phase 3 (fast follows, prioritized by felt friction):** P1-1 calendar matching first, then local time, circles, widget, talking points, export, recap.
+**Phase 3 (fast follows, prioritized by felt friction):** notes loop first (pulled forward, in progress July 2026), then calendar matching, local time, circles, widget, export.
 
 ---
 

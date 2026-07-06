@@ -9,6 +9,7 @@ struct PersonDetailView: View {
     @Bindable var person: Person
 
     @State private var showingLogSheet = false
+    @State private var showingCaptureSheet = false
     @State private var showingDeleteConfirm = false
     @State private var undoableInteraction: Interaction?
     @State private var undoDismissTask: Task<Void, Never>?
@@ -16,6 +17,7 @@ struct PersonDetailView: View {
     var body: some View {
         List {
             headerSection
+            recallSection
             outreachSection
             if person.lastContactDate == nil && !person.isPaused {
                 seedSection
@@ -24,7 +26,6 @@ struct PersonDetailView: View {
                 contactSection
             }
             settingsSection
-            notesSection
             historySection
         }
         .navigationTitle(person.name)
@@ -52,6 +53,21 @@ struct PersonDetailView: View {
         }
         .sheet(isPresented: $showingLogSheet) {
             LogInteractionSheet(person: person)
+        }
+        .sheet(isPresented: $showingCaptureSheet) {
+            CaptureSheet(person: person)
+        }
+        .task {
+            #if DEBUG
+            if DemoData.shouldSimulateOutreach && undoableInteraction == nil {
+                let interaction = Interaction(type: .call, source: .outreach)
+                modelContext.insert(interaction)
+                interaction.person = person
+                showUndo(for: interaction)
+            }
+            if DemoData.shouldShowCaptureSheet { showingCaptureSheet = true }
+            if DemoData.shouldShowLogSheet { showingLogSheet = true }
+            #endif
         }
         .safeAreaInset(edge: .bottom) {
             if let interaction = undoableInteraction {
@@ -162,15 +178,39 @@ struct PersonDetailView: View {
         }
     }
 
-    private var notesSection: some View {
-        Section("Notes") {
+    private var recallSection: some View {
+        Section {
+            HStack(spacing: 8) {
+                Image(systemName: "questionmark.bubble")
+                    .foregroundStyle(.secondary)
+                TextField("Next time, ask about…", text: askAboutBinding)
+                if person.askAboutNext != nil {
+                    Button {
+                        withAnimation { person.askAboutNext = nil }
+                    } label: {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Asked, clear it")
+                }
+            }
             TextField(
-                "Kids' names, last topics, things to ask about…",
+                "What's going on in their life…",
                 text: $person.notes,
                 axis: .vertical
             )
-            .lineLimit(3...8)
+            .lineLimit(2...8)
+        } header: {
+            Text("Before you reach out")
         }
+    }
+
+    private var askAboutBinding: Binding<String> {
+        Binding(
+            get: { person.askAboutNext ?? "" },
+            set: { person.askAboutNext = $0.isEmpty ? nil : $0 }
+        )
     }
 
     private var historySection: some View {
@@ -257,10 +297,16 @@ struct PersonDetailView: View {
     }
 
     private func undoBanner(for interaction: Interaction) -> some View {
-        HStack {
+        HStack(spacing: 16) {
             Text("\(interaction.type.label) logged")
                 .font(.subheadline)
             Spacer()
+            Button("Add note") {
+                undoDismissTask?.cancel()
+                undoableInteraction = nil
+                showingCaptureSheet = true
+            }
+            .font(.subheadline.weight(.semibold))
             Button("Undo") {
                 modelContext.delete(interaction)
                 undoDismissTask?.cancel()

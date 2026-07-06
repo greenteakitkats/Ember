@@ -32,6 +32,8 @@ xcrun simctl launch <device> ryantdo.Weave -demoData -openFirstPerson  # jump to
 xcrun simctl launch <device> ryantdo.Weave -showManualAdd       # present the add-person sheet
 ```
 
+Combined with `-openFirstPerson`: `-simulateOutreach` (log a call + show the post-log banner), `-showCaptureSheet` (quick-note sheet), `-showLogSheet` (manual log sheet).
+
 Current UI screenshots live in `Screenshots/`.
 
 ## Product tone
