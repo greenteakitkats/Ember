@@ -53,18 +53,28 @@ final class Person {
 
     /// Days since last contact divided by the cadence length.
     /// 1.0 means exactly at cadence; nil means no history to rank by.
-    var overdueRatio: Double? {
+    /// Parameterized on the reference date so the daily digest can
+    /// project health into future mornings when scheduling ahead.
+    func overdueRatio(at date: Date) -> Double? {
         guard let last = lastContactDate else { return nil }
-        let daysSince = Date.now.timeIntervalSince(last) / 86_400
+        let daysSince = date.timeIntervalSince(last) / 86_400
         return max(daysSince, 0) / Double(cadence.days)
     }
 
-    var healthState: HealthState {
+    var overdueRatio: Double? {
+        overdueRatio(at: .now)
+    }
+
+    func healthState(at date: Date) -> HealthState {
         if isPaused { return .paused }
-        guard let ratio = overdueRatio else { return .unranked }
+        guard let ratio = overdueRatio(at: date) else { return .unranked }
         if ratio < 0.8 { return .onTrack }
         if ratio <= 1.2 { return .drifting }
         return .overdue
+    }
+
+    var healthState: HealthState {
+        healthState(at: .now)
     }
 
     /// Days past the cadence deadline. Negative means not due yet.
@@ -94,11 +104,11 @@ final class Person {
         return max(0.08, 1 - ratio)
     }
 
-    var daysUntilNextBirthday: Int? {
+    func daysUntilNextBirthday(from referenceDate: Date) -> Int? {
         guard let birthday else { return nil }
         let calendar = Calendar.current
         let components = calendar.dateComponents([.month, .day], from: birthday)
-        let today = calendar.startOfDay(for: .now)
+        let today = calendar.startOfDay(for: referenceDate)
         let todayComponents = calendar.dateComponents([.month, .day], from: today)
         if todayComponents.month == components.month && todayComponents.day == components.day {
             return 0
@@ -109,6 +119,10 @@ final class Person {
             matchingPolicy: .nextTimePreservingSmallerComponents
         ) else { return nil }
         return calendar.dateComponents([.day], from: today, to: calendar.startOfDay(for: next)).day
+    }
+
+    var daysUntilNextBirthday: Int? {
+        daysUntilNextBirthday(from: .now)
     }
 
     /// Most recent interaction of a given type — powers "last seen in

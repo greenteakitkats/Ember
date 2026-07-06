@@ -19,7 +19,7 @@ iOS personal CRM: track the people you care about, see who's drifting, get promp
 Two targets: the app and `EmberWidgetExtension` (WidgetKit). They share one SwiftData store through the app group `group.ryantdo.Ember` (`SharedStore`); if the group container is unavailable (unsigned simulator builds), it falls back to the local default store so nothing breaks.
 
 - `Shared/` — compiled into BOTH targets: `Person` (health math lives here: `overdueRatio`, `healthState`), `Interaction`, `SharedStore`
-- `Ember/Managers/` — `ContactsManager` (CNContactStore sync; people link via `contactIdentifier`, cached fields refresh on launch), `DemoData`
+- `Ember/Managers/` — `ContactsManager` (CNContactStore sync; people link via `contactIdentifier`, cached fields refresh on launch), `DigestManager` (daily digest: schedules 7 mornings of local notifications with per-day projected content via `Person.healthState(at:)`, rebuilt on every app background; quiet days schedule nothing — anti-guilt), `TipJarManager` (StoreKit 2, inert until the IAP exists in App Store Connect), `DemoData`
 - `Ember/Views/` — `ContentView` (ranked list grouped by health), `PersonDetailView` (recall-first card: ask-about + notes + loves, then outreach buttons), sheets for logging/capturing/adding
 - `EmberWidget/` — home screen widget ("N people miss you" + top drifting people)
 
@@ -41,7 +41,7 @@ xcrun simctl launch <device> ryantdo.Ember -demoData -openFirstPerson  # jump to
 xcrun simctl launch <device> ryantdo.Ember -showManualAdd       # present the add-person sheet
 ```
 
-Combined with `-openFirstPerson`: `-simulateOutreach` (log a call + show the post-log banner), `-showCaptureSheet` (quick-note sheet), `-showLogSheet` (manual log sheet).
+Combined with `-openFirstPerson`: `-simulateOutreach` (log a call + show the post-log banner), `-showCaptureSheet` (quick-note sheet), `-showLogSheet` (manual log sheet). `-testDigest` prints the next 7 days of projected digest content to the console (`DIGEST day+N: …`) without touching the notification center — use `simctl launch --console-pty` to capture it. Actual notification delivery needs a real device (simulator permission prompts can't be tapped).
 
 Current UI screenshots live in `Screenshots/`.
 

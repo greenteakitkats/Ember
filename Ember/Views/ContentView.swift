@@ -142,6 +142,9 @@ struct ContentView: View {
                 if DemoData.shouldShowSettings {
                     showingSettings = true
                 }
+                if DemoData.shouldTestDigest {
+                    DigestManager.shared.debugDump(container: modelContext.container)
+                }
                 if DemoData.shouldOpenFirstPerson {
                     let everyone = (try? modelContext.fetch(FetchDescriptor<Person>())) ?? []
                     if let target = everyone.max(by: { ($0.overdueRatio ?? -1) < ($1.overdueRatio ?? -1) }) {

@@ -36,6 +36,10 @@ enum DemoData {
         ProcessInfo.processInfo.arguments.contains("-showSettings")
     }
 
+    static var shouldTestDigest: Bool {
+        ProcessInfo.processInfo.arguments.contains("-testDigest")
+    }
+
     static func seed(into context: ModelContext) {
         try? context.delete(model: Interaction.self)
         try? context.delete(model: Person.self)

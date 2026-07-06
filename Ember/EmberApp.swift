@@ -33,6 +33,11 @@ struct EmberApp: App {
             .fontDesign(.rounded)
             .preferredColorScheme(AppearanceMode(rawValue: appearanceModeRaw)?.colorScheme)
             .onChange(of: scenePhase) { _, phase in
+                if phase == .background {
+                    // Rebuild the digest schedule with the freshest data
+                    // every time the user leaves the app.
+                    DigestManager.shared.reschedule(container: container)
+                }
                 guard appLockEnabled else { return }
                 if phase == .background {
                     isUnlocked = false
